@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuis Interaktif Multimedia Pendidikan</title>
+  <style>
+    :root{--ink:#172033;--muted:#667085;--blue:#2457d6;--purple:#7548d8;--line:#d7dce5;--panel:#fff;--silver:#e7eaf0;--green:#087f5b;--red:#b42318;--amber:#9a6700}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:linear-gradient(135deg,#e6e8ed 0%,#f8f9fb 48%,#dce2ec 100%);min-height:100vh}
+    .topbar{background:linear-gradient(100deg,#18264b,#304bb0 60%,#7548d8);color:white;padding:22px 18px;box-shadow:0 8px 24px #17203322}.top-inner{max-width:980px;margin:auto;display:flex;gap:14px;align-items:center}.brand-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#ffffff24;font-size:27px;border:1px solid #ffffff44}.topbar h1{margin:0;font-size:clamp(19px,3vw,28px);line-height:1.2}.topbar p{margin:7px 0 0;color:#e2e8ff;font-size:13px}
+    main{max-width:980px;margin:26px auto;padding:0 16px 42px}.card{background:var(--panel);border:1px solid #ffffffc9;border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:0 14px 38px #27334d12;margin-bottom:18px}.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#eef2ff;color:#3447a8;border-radius:99px;padding:7px 12px;font-weight:750;font-size:12px;letter-spacing:.03em}.section-title{margin:14px 0 8px;font-size:clamp(22px,3vw,30px)}.muted{color:var(--muted);line-height:1.6}.identity-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label{font-size:13px;font-weight:750;color:#344054}input,textarea{font:inherit;width:100%;border:1px solid #cfd5df;border-radius:12px;padding:13px 14px;background:#fff;color:var(--ink);outline:none;transition:.15s}input:focus,textarea:focus{border-color:#5878e7;box-shadow:0 0 0 4px #5878e71a}textarea{min-height:175px;resize:vertical;line-height:1.55}input:disabled,textarea:disabled{background:#f3f5f8;color:#687386}.btn{border:0;border-radius:12px;padding:13px 19px;font:inherit;font-weight:800;cursor:pointer;transition:transform .15s,opacity .15s}.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.btn-primary{background:linear-gradient(100deg,var(--blue),var(--purple));color:#fff;box-shadow:0 7px 16px #3b4fc32b}.btn-secondary{background:#edf0f6;color:#25314b}.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.info-tile{padding:15px;border:1px solid #e0e5ee;background:linear-gradient(145deg,#fbfcff,#f0f3f8);border-radius:15px}.info-tile small{display:block;color:var(--muted);font-weight:700;margin-bottom:6px}.info-tile strong{font-size:14px;line-height:1.45;display:block}.notice{padding:14px 16px;border-radius:13px;background:#fff8e6;border:1px solid #f6df9a;color:#694d00;line-height:1.55;font-size:13px;margin-top:18px}.notice strong{color:#593f00}.error{margin-top:14px;color:var(--red);font-size:13px;font-weight:700}.hidden{display:none!important}
+    .quiz-head{display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}.progress-wrap{height:8px;background:#edf0f5;border-radius:99px;overflow:hidden;margin:20px 0}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#2b5be3,#8751dc);transition:width .3s}.timer{display:flex;align-items:center;gap:9px;border-radius:14px;background:#f2f4f8;border:1px solid #dce1e9;padding:11px 14px;min-width:140px}.timer-icon{font-size:20px}.timer-label{font-size:11px;color:var(--muted);font-weight:800}.timer-value{font-size:23px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.03em}.timer.urgent{background:#fff0ef;border-color:#ffc9c5;color:var(--red);animation:pulse 1s infinite}.timer.urgent .timer-label{color:var(--red)}@keyframes pulse{50%{opacity:.7}}
+    .question-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.q-badge{background:#e8edff;color:#2f49b2;font-size:12px;font-weight:900;padding:8px 11px;border-radius:10px}.time-badge{font-size:12px;color:#5d6678;background:#f2f4f8;padding:8px 11px;border-radius:10px;font-weight:750}.prompt{font-size:18px;line-height:1.65;font-weight:650;margin:20px 0}.hint{font-size:13px;color:var(--muted);margin-top:10px}.question-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.autosave{font-size:12px;color:var(--muted)}
+    .result-hero{background:linear-gradient(120deg,#e9efff,#f2eaff);border:1px solid #d9e0ff;padding:22px;border-radius:17px}.result-hero h2{margin:0 0 7px}.rank-number{font-size:42px;font-weight:950;color:#344bb9}.table-wrap{overflow-x:auto;margin-top:14px}table{border-collapse:collapse;width:100%;min-width:520px}th,td{text-align:left;padding:12px 13px;border-bottom:1px solid #e5e8ef;font-size:13px}th{background:#f5f7fb;color:#4c5870;font-size:12px;text-transform:uppercase;letter-spacing:.04em}tbody tr.mine{background:#eef2ff;font-weight:800}.status{display:inline-block;border-radius:99px;padding:5px 9px;font-size:11px;font-weight:900;background:#edf0f5;color:#475467}.status.good{background:#e3f7ee;color:#087f5b}.status.late{background:#fff0e0;color:#9a4b00}.answer-cell{max-width:280px;overflow-wrap:anywhere}.footnote{font-size:12px;color:var(--muted);line-height:1.6;margin-top:18px}.spinner{display:inline-block;width:15px;height:15px;border:2px solid #ffffff66;border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:7px}@keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:620px){.identity-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.info-grid{grid-template-columns:1fr}.top-inner{align-items:flex-start}.brand-icon{flex-shrink:0}.timer{min-width:125px}.card{border-radius:17px}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="top-inner"><div class="brand-icon">🧠</div><div><h1>Kuis Interaktif Multimedia Pendidikan</h1><p>Eksplorasi ide • Kembangkan media • Rancang pengalaman belajar</p></div></div></header>
+  <main>
+    <section id="identityView" class="card">
+      <span class="eyebrow">✦ ASESMEN BERWAKTU</span>
+      <h2 class="section-title">Selamat datang, calon pengembang multimedia!</h2>
+      <p class="muted">Isi identitas terlebih dahulu. Setelah identitas dikirim, informasi program studi dan universitas akan ditampilkan sebelum kuis dimulai.</p>
+      <form id="identityForm">
+        <div class="identity-grid">
+          <div class="field"><label for="name">Nama lengkap *</label><input id="name" name="name" autocomplete="name" maxlength="120" required placeholder="Masukkan nama lengkap"></div>
+          <div class="field"><label for="npm">NPM *</label><input id="npm" name="npm" maxlength="50" required placeholder="Masukkan NPM"></div>
+          <div class="field full"><label for="email">Email aktif *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="160" required placeholder="nama@contoh.com"></div>
+        </div>
+        <div id="identityError" class="error hidden" role="alert"></div>
+        <div class="btn-row"><button class="btn btn-primary" id="identitySubmit" type="submit">Lanjutkan ke konfirmasi identitas →</button></div>
+      </form>
+    </section>
+
+    <section id="confirmView" class="card hidden">
+      <span class="eyebrow">✓ IDENTITAS TERCATAT</span><h2 class="section-title">Konfirmasi identitas peserta</h2>
+      <p class="muted">Periksa data berikut. Waktu pengerjaan mulai dihitung saat tombol “Mulai kuis” ditekan.</p>
+      <div class="info-grid"><div class="info-tile"><small>NAMA PESERTA</small><strong id="confirmName"></strong></div><div class="info-tile"><small>NPM</small><strong id="confirmNpm"></strong></div><div class="info-tile"><small>EMAIL</small><strong id="confirmEmail"></strong></div><div class="info-tile"><small>PROGRAM STUDI</small><strong id="confirmProgram">Pendidikan Matematika</strong></div><div class="info-tile"><small>UNIVERSITAS</small><strong id="confirmUniversity">Universitas PGRI Yogyakarta</strong></div><div class="info-tile"><small>BATAS WAKTU</small><strong>17 menit total</strong></div></div>
+      <div class="notice"><strong>Ketentuan waktu:</strong> Soal 1 = 2 menit; Soal 2, 3, dan 4 masing-masing = 5 menit. Total maksimal = 17 menit. Saat waktu soal habis, sistem otomatis beralih ke soal berikutnya.</div>
+      <div class="btn-row"><button class="btn btn-secondary" id="editIdentity" type="button">← Perbaiki identitas</button><button class="btn btn-primary" id="startQuiz" type="button">Mulai kuis sekarang →</button></div><div id="confirmError" class="error hidden"></div>
+    </section>
+
+    <section id="quizView" class="card hidden">
+      <div class="quiz-head"><div><span class="eyebrow">MULTIMEDIA PENDIDIKAN</span><h2 class="section-title" id="questionTitle">Soal 1</h2><div class="question-meta"><span class="q-badge" id="questionCounter">SOAL 1 DARI 4</span><span class="time-badge" id="questionLimit">Batas waktu: 02:00</span></div></div><div class="timer" id="timerBox"><span class="timer-icon">⏱</span><div><div class="timer-label">SISA WAKTU SOAL</div><div class="timer-value" id="timerValue">02:00</div></div></div></div>
+      <div class="progress-wrap" aria-label="Progres kuis"><div class="progress-bar" id="progressBar"></div></div>
+      <p class="prompt" id="questionPrompt"></p>
+      <div class="field"><label id="answerLabel" for="answerInput">Jawaban Anda</label><textarea id="answerInput" maxlength="5000" placeholder="Tuliskan jawaban Anda secara jelas dan ringkas..."></textarea><div class="hint" id="answerHint">Anda dapat menyimpan draf, memperbaiki jawaban selama waktu masih tersedia, lalu mengirim jawaban final.</div></div>
+      <div id="questionError" class="error hidden" role="alert"></div>
+      <div class="question-footer"><span class="autosave" id="questionStatus">Draf belum disimpan.</span><div class="btn-row" style="margin:0"><button class="btn btn-secondary" id="saveDraft" type="button">Simpan draf</button><button class="btn btn-primary" id="nextQuestion" type="button">Kirim final & lanjutkan →</button></div></div>
+    </section>
+
+    <section id="resultView" class="card hidden">
+      <span class="eyebrow">✓ SESI SELESAI</span><h2 class="section-title">Hasil pengerjaan kuis</h2><p class="muted">Terima kasih telah menyelesaikan Kuis Interaktif Multimedia Pendidikan.</p>
+      <div class="result-hero"><h2 id="resultName">Peserta</h2><p class="muted" id="resultMeta"></p><div class="rank-number" id="resultRank">—</div><strong id="rankCaption">Posisi peserta berdasarkan waktu pengerjaan</strong><p class="muted" style="margin-bottom:0">Total waktu tercatat: <strong id="totalTime">00:00</strong></p></div>
+      <h3 style="margin-top:28px">Status dan durasi tiap soal</h3><div class="table-wrap"><table><thead><tr><th>No.</th><th>Soal</th><th>Durasi</th><th>Status</th></tr></thead><tbody id="answerResults"></tbody></table></div>
+      <h3 style="margin-top:28px">Urutan peserta</h3><p class="muted">Peringkat diurutkan berdasarkan total waktu pengerjaan dari yang tercepat. Urutan ini <strong>hanya berdasarkan waktu pengerjaan soal, bukan berdasarkan kebenaran atau kualitas jawaban</strong>.</p>
+      <div class="table-wrap"><table><thead><tr><th>No. Urut</th><th>Nama</th><th>NPM</th><th>Total waktu</th></tr></thead><tbody id="rankingBody"></tbody></table></div>
+      <p class="footnote">Catatan: urutan peserta dapat berubah jika peserta lain menyelesaikan kuis setelah Anda. Waktu yang ditampilkan merupakan waktu yang dicatat oleh sistem.</p><div class="btn-row"><button class="btn btn-secondary" id="printResult" type="button">Cetak hasil</button></div>
+    </section>
+    <p class="footnote" style="text-align:center">Program Studi Pendidikan Matematika · Universitas PGRI Yogyakarta</p>
+  </main>
+<script>
+  const $ = id => document.getElementById(id);
+  let config = null, identity = null, session = null, currentQuestion = 0, questionStartMs = 0, questionLimitSeconds = 0, tickHandle = null, submitting = false, savingDraft = false, finished = false, serverOffsetMs = 0;
+
+  function show(viewId){['identityView','confirmView','quizView','resultView'].forEach(id => $(id).classList.toggle('hidden',id!==viewId));}
+  function setError(id,msg){const el=$(id);el.textContent=msg||'';el.classList.toggle('hidden',!msg);}
+  function callServer(method,...args){return new Promise((resolve,reject)=>{try{if(!window.google||!google.script||!google.script.run)throw new Error('Google Apps Script tidak tersedia. Buka URL deployment /exec, bukan pratinjau HTML.');const runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(e=>reject(new Error(e&&e.message?e.message:String(e))));runner[method](...args);}catch(e){reject(e);}});}
+  function fmt(seconds){seconds=Math.max(0,Math.floor(seconds||0));return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');}
+  function fmtDuration(seconds){seconds=Math.max(0,Math.floor(seconds||0));if(seconds<60)return seconds+' detik';return Math.floor(seconds/60)+' m '+String(seconds%60).padStart(2,'0')+' dtk';}
+  function estimateServerNow(){return Date.now()+serverOffsetMs;}
+  function setBusy(button,busy,label){button.disabled=busy;if(busy){button.dataset.oldLabel=button.textContent;button.innerHTML='<span class="spinner"></span>'+label;}else{button.textContent=button.dataset.oldLabel||label;}}
+
+  async function init(){try{config=await callServer('getAppConfig');$('confirmProgram').textContent=config.program;$('confirmUniversity').textContent=config.university;}catch(e){setError('identityError','Gagal memuat aplikasi: '+e.message);}}
+  // Setelah identitas valid, langsung buat sesi di server dan tampilkan soal pertama.
+  // Ini menghindari peserta berhenti pada layar konfirmasi tanpa mengetahui langkah berikutnya.
+  $('identityForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(submitting||session)return;
+    identity={name:$('name').value.trim(),npm:$('npm').value.trim(),email:$('email').value.trim()};
+    if(!identity.name||!identity.npm||!identity.email){setError('identityError','Nama, NPM, dan email wajib diisi.');return;}
+    if(!$('email').checkValidity()){setError('identityError','Masukkan alamat email yang valid.');return;}
+    setError('identityError','');
+    setBusy($('identitySubmit'),true,'Menyiapkan kuis...');
+    try{
+      session=await callServer('startSession',identity);
+      serverOffsetMs=new Date(session.serverNow).getTime()-Date.now();
+      currentQuestion=1;
+      show('quizView');
+      await loadQuestion(1);
+    }catch(err){
+      session=null;
+      show('identityView');
+      setError('identityError','Gagal memulai kuis: '+err.message+' Pastikan pengelola telah menjalankan setupApp() dan aplikasi sudah di-deploy dengan akses yang benar.');
+    }finally{setBusy($('identitySubmit'),false,'Lanjutkan ke konfirmasi identitas →');}
+  });
+  // Layar konfirmasi lama tidak dipakai. Sesi dibuat satu kali pada submit identitas.
+  $('editIdentity').addEventListener('click',()=>show('identityView'));
+  $('startQuiz').addEventListener('click',()=>{ if(session) { show('quizView'); loadQuestion(1); } else { show('identityView'); } });
+
+  async function loadQuestion(no){
+    if(finished)return;
+    if(estimateServerNow()-new Date(session.startedAt).getTime()>=config.totalSeconds*1000){await endQuiz();return;}
+    submitting=false;currentQuestion=no;
+    $('nextQuestion').disabled=false;$('saveDraft').disabled=false;
+    const q=config.questions.find(x=>x.no===no);if(!q){await endQuiz();return;}
+    $('questionTitle').textContent=q.title;$('questionCounter').textContent='SOAL '+no+' DARI '+config.questions.length;$('questionLimit').textContent='Batas waktu: '+fmt(q.seconds);$('questionPrompt').textContent=q.prompt;
+    $('answerInput').value='';$('answerInput').disabled=false;$('saveDraft').disabled=false;$('answerInput').placeholder=q.type==='url'?'Tempel link lengkap, misalnya https://...':'Tuliskan materi matematika dan capaian pembelajaran yang Anda pilih...';$('answerLabel').textContent=q.type==='url'?'Link URL jawaban':'Jawaban uraian';$('answerHint').textContent=q.type==='url'?'Tempel tautan lengkap. Anda boleh menyimpan draf dan memperbaikinya sebelum mengirim final.':'Sebutkan kelas, materi matematika, dan rumuskan capaian pembelajaran yang spesifik. Anda dapat menyimpan draf sebelum mengirim final.';$('nextQuestion').textContent=no===4?'Kirim final & lihat hasil →':'Kirim final & lanjutkan →';$('saveDraft').textContent='Simpan draf';$('progressBar').style.width=((no-1)/4*100)+'%';$('questionStatus').textContent='Waktu mulai dicatat oleh server.';setError('questionError','');$('timerBox').classList.remove('urgent');
+    try{const started=await callServer('startQuestion',session.sessionId,no);serverOffsetMs=new Date(started.serverNow).getTime()-Date.now();if(started.finished){await endQuiz();return;}questionStartMs=new Date(started.startedAt).getTime();questionLimitSeconds=q.seconds;startTicker();}catch(e){setError('questionError',e.message);$('nextQuestion').disabled=true;}
+  }
+  function startTicker(){if(tickHandle)clearInterval(tickHandle);tickHandle=setInterval(()=>{if(finished||submitting)return;const elapsed=Math.floor((estimateServerNow()-questionStartMs)/1000);const remaining=Math.max(0,questionLimitSeconds-elapsed);$('timerValue').textContent=fmt(remaining);$('timerBox').classList.toggle('urgent',remaining<=30);const totalElapsed=Math.floor((estimateServerNow()-new Date(session.startedAt).getTime())/1000);if(totalElapsed>=config.totalSeconds){submitCurrent(true,true);return;}if(remaining<=0){submitCurrent(true,true);return;}},250);}
+  $('nextQuestion').addEventListener('click',()=>submitCurrent(false,false));
+  $('saveDraft').addEventListener('click',saveCurrentDraft);
+  async function saveCurrentDraft(){
+    if(savingDraft||submitting||finished)return;
+    const remaining=Math.max(0,questionLimitSeconds-Math.floor((estimateServerNow()-questionStartMs)/1000));
+    if(remaining<=0){submitCurrent(true,true);return;}
+    savingDraft=true;$('saveDraft').disabled=true;$('questionStatus').textContent='Menyimpan draf...';setError('questionError','');
+    try{const result=await callServer('saveDraft',session.sessionId,currentQuestion,$('answerInput').value.trim());serverOffsetMs=new Date(result.serverNow).getTime()-Date.now();$('questionStatus').textContent='Draf tersimpan — Anda masih dapat memperbaikinya sebelum mengirim final.';}
+    catch(e){setError('questionError',e.message);$('questionStatus').textContent='Draf belum tersimpan.';}
+    finally{savingDraft=false;$('saveDraft').disabled=false;}
+  }
+  function extractAnswerUrl(value){
+    let text=String(value||'').trim();
+    const md=text.match(/\]\((https?:\/\/[^\s)]+)\)/i);
+    if(md) text=md[1];
+    const match=text.match(/https?:\/\/[^\s<>"']+/i);
+    if(match) text=match[0].replace(/[),.;]+$/,'');
+    return /^https?:\/\/[^\s]+\.[^\s]+/i.test(text)?text:'';
+  }
+  async function submitCurrent(timedOut,automatic){
+    if(submitting||finished)return;
+    // Validasi dilakukan sebelum tombol dikunci agar peserta dapat memperbaiki jawaban.
+    const q=config.questions.find(x=>x.no===currentQuestion);
+    let answer=$('answerInput').value.trim();
+    if(!timedOut && q && q.type==='url'){
+      answer=extractAnswerUrl(answer);
+      if(!answer){
+        setError('questionError','Jawaban soal ini harus berupa tautan lengkap yang diawali http:// atau https:// (contoh: https://... ). Periksa tautan, lalu tekan Kirim final & lanjutkan kembali.');
+        $('answerInput').focus();
+        return;
+      }
+      $('answerInput').value=answer;
+    }
+    submitting=true;if(tickHandle)clearInterval(tickHandle);$('nextQuestion').disabled=true;$('saveDraft').disabled=true;$('answerInput').disabled=true;$('questionStatus').textContent=timedOut?'Waktu habis. Menyimpan status soal...':'Menyimpan jawaban...';setError('questionError','');
+    try{
+      const answer=$('answerInput').value.trim();const result=await callServer('submitAnswer',session.sessionId,currentQuestion,answer,timedOut);serverOffsetMs=new Date(result.serverNow).getTime()-Date.now();$('progressBar').style.width=(currentQuestion/4*100)+'%';
+      if(currentQuestion>=4||result.sessionElapsed>=config.totalSeconds){await endQuiz();return;}
+      await loadQuestion(currentQuestion+1);
+    }catch(e){submitting=false;$('nextQuestion').disabled=false;$('saveDraft').disabled=false;$('answerInput').disabled=false;if(tickHandle)clearInterval(tickHandle);setError('questionError',e.message+' Jika waktu masih tersedia, periksa jawaban lalu kirim kembali.');startTicker();}
+  }
+  async function endQuiz(){if(finished)return;finished=true;if(tickHandle)clearInterval(tickHandle);$('nextQuestion').disabled=true;try{const result=await callServer('finishSession',session.sessionId);renderResults(result);show('resultView');}catch(e){finished=false;show('quizView');setError('questionError','Tidak berhasil menyimpan hasil akhir: '+e.message);}}
+  function renderResults(data){$('resultName').textContent=data.participant.name;$('resultMeta').textContent=data.participant.npm+' · '+data.participant.program+' · '+data.participant.university;$('resultRank').textContent=data.rank?'#'+data.rank:'—';$('rankCaption').textContent=data.rank?'Posisi peserta berdasarkan waktu pengerjaan':'Peringkat akan muncul setelah sesi tercatat selesai';$('totalTime').textContent=fmt(data.totalSeconds);
+    $('answerResults').innerHTML='';data.answers.forEach(a=>{const tr=document.createElement('tr');const tdNo=document.createElement('td');tdNo.textContent=a.no;const tdTitle=document.createElement('td');tdTitle.textContent=a.title.replace(/^Soal \d+ — /,'');const tdTime=document.createElement('td');tdTime.textContent=fmtDuration(a.durationSeconds);const tdStatus=document.createElement('td');const badge=document.createElement('span');badge.className='status '+(a.status==='DIKIRIM'?'good':a.status==='WAKTU HABIS'?'late':'');badge.textContent=a.status;tdStatus.appendChild(badge);[tdNo,tdTitle,tdTime,tdStatus].forEach(td=>tr.appendChild(td));$('answerResults').appendChild(tr);});
+    $('rankingBody').innerHTML='';data.ranking.forEach(r=>{const tr=document.createElement('tr');if(r.npm===data.participant.npm)tr.className='mine';[r.rank,r.name,r.npm,fmt(r.totalSeconds)].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td);});$('rankingBody').appendChild(tr);});if(!data.ranking.length){const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.textContent='Belum ada peserta yang menyelesaikan kuis.';tr.appendChild(td);$('rankingBody').appendChild(tr);}}
+  $('printResult').addEventListener('click',()=>window.print());
+  window.addEventListener('beforeunload',e=>{if(session&&!finished){e.preventDefault();e.returnValue='Kuis sedang berlangsung. Jika meninggalkan halaman, waktu tetap berjalan.';}});
+  init();
+</script>
+</body>
+</html>
